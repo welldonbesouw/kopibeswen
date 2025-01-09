@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+   font-family: "Nunito-Bold";
+   src: local("Nunito-Bold"), url("./assets/fonts/Nunito-Bold.ttf");
+}
+@font-face {
+   font-family: "Nunito-Light";
+   src: local("Nunito-Light"), url("./assets/fonts/Nunito-Light.ttf");
+}
+@font-face {
+   font-family: "Nunito-Medium";
+   src: local("Nunito-Medium"), url("./assets/fonts/Nunito-Medium.ttf");
+}
+@font-face {
+   font-family: "Nunito-Regular";
+   src: local("Nunito-Regular"), url("./assets/fonts/Nunito-Regular.ttf");
+}
+@font-face {
+   font-family: "Nunito-SemiBold";
+   src: local("Nunito-SemiBold"), url("./assets/fonts/Nunito-SemiBold.ttf");
+}
+@font-face {
+   font-family: "Pacifico-Regular";
+   src: url("./assets/fonts/Pacifico-Regular.ttf");
+}
+
+body {
+   font-family: "Nunito";
+}
+
+@layer base {
+   input[type="number"]::-webkit-inner-spin-button,
+   input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+   }
+   input[type="number"] {
+      appearance: textfield;
+   }
+
+   td {
+      padding-left: 10px;
+      padding-right: 10px;
+      /* border: 1px solid;
+      border-color: #d4af3730; */
+   }
+   thead {
+      padding-left: 10 px;
+      padding-right: 10px;
+   }
+   /* tr:last-of-type td:first-of-type {
+      border-bottom-left-radius: 0.5rem;
+   } */
+   /* tr:last-of-type td:last-of-type {
+      border-bottom-right-radius: 0.5rem;
+   } */
+}

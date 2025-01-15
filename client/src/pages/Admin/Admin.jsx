@@ -3,6 +3,7 @@ import AddProduct from "./AddProduct";
 import ProductsList from "./ProductsList";
 import AnalyticsTab from "./AnalyticsTab";
 import { Boxes, ChartNoAxesCombined, PackagePlus } from "lucide-react";
+import { Outlet } from "react-router-dom";
 
 const adminMenu = [
    { id: "add", label: "Add Product", icon: PackagePlus },

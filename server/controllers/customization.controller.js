@@ -11,11 +11,13 @@ export async function getCustomizations(req, res) {
 }
 
 export async function createCustomization(req, res) {
-   const { name, price } = req.body;
+   const { type, option, price, applicableTo } = req.body;
    try {
       const customization = await Customization.create({
-         name: name.toLowerCase(),
+         type,
+         option,
          price,
+         applicableTo,
       });
       res.json(customization);
    } catch (error) {
@@ -26,13 +28,15 @@ export async function createCustomization(req, res) {
 
 export async function updateCustomization(req, res) {
    const { id } = req.params;
-   const { name, price } = req.body;
+   const { type, option, price, applicableTo } = req.body;
    try {
       const customization = await Customization.findByIdAndUpdate(
          id,
          {
-            name,
+            type,
+            option,
             price,
+            applicableTo,
          },
          { new: true }
       );

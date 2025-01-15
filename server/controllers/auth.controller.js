@@ -10,7 +10,7 @@ function generateTokens(userId) {
    return { accessToken, refreshToken };
 }
 
-async function storeSessionId(sessionId, refreshToken) {
+async function storeRefreshToken(sessionId, refreshToken) {
    await redis.set(`session_id: ${sessionId}`, refreshToken, "EX", 60 * 60 * 24 * 30 * 3);
 }
 
@@ -137,7 +137,7 @@ export async function login(req, res) {
          }
 
          const { accessToken, refreshToken } = generateTokens(user._id);
-         await storeSessionId(sessionId, refreshToken);
+         await storeRefreshToken(sessionId, refreshToken);
          setCookies(res, accessToken, sessionId);
 
          // req.user = user;

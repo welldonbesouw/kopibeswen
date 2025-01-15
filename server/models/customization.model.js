@@ -1,14 +1,29 @@
 import mongoose from "mongoose";
 
 const customizationSchema = new mongoose.Schema({
-   name: {
+   type: {
       type: String,
-      required: [true, "Name is required"],
+      required: true,
+      enum: ["espresso", "temperature", "sugar", "ice", "milk"],
+   },
+   option: {
+      type: String,
+      required: true,
    },
    price: {
       type: Number,
-      required: [true, "Price is required"],
+      default: 0,
    },
+   isAvailable: {
+      type: Boolean,
+      default: true,
+   },
+   applicableTo: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "Product",
+      },
+   ],
 });
 
 const Customization = mongoose.model("Customization", customizationSchema);

@@ -17,9 +17,10 @@ export const useProduct = create((set) => ({
             products: [...prevState.products, res.data],
             loading: false,
          }));
+         toast.success("Product has been created successfully.");
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error);
+         toast.error(error.response.data.error || "Failed to create product.");
       }
    },
 
@@ -30,24 +31,38 @@ export const useProduct = create((set) => ({
          set({ customizations: res.data, loading: false });
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error);
+         toast.error(error.response.data.error || "Failed to get customizations.");
       }
    },
 
-   createCustomization: async (name, price) => {
+   createCustomization: async (data) => {
       set({ loading: true });
       try {
-         const res = await axios.post("/customizations", { name, price });
+         const res = await axios.post("/customizations", data);
          set((prevState) => ({
             customizations: [...prevState.customizations, res.data],
             loading: false,
          }));
+         toast.success("Customization has been created successfully.");
       } catch (error) {
+         console.log("error in createCustomization");
          set({ loading: false });
-         toast.error(error.response.data.error);
+         toast.error(error.response.data.error || "Failed to create customization.");
       }
    },
 
+   getProduct: async (productId) => {
+      set({ loading: true });
+      try {
+         const res = await axios.get(`/products/${productId}`);
+         set({ loading: false });
+         console.log("getProduct: ", res.data.product);
+         return res.data;
+      } catch (error) {
+         set({ loading: false });
+         toast.error(error.response.data.error || "Failed to get product.");
+      }
+   },
    getAllProducts: async () => {
       set({ loading: true });
       try {
@@ -55,7 +70,7 @@ export const useProduct = create((set) => ({
          set({ products: res.data, loading: false });
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error || "Failed to fetch products");
+         toast.error(error.response.data.error || "Failed to fetch products.");
       }
    },
 
@@ -66,7 +81,7 @@ export const useProduct = create((set) => ({
          set({ products: res.data, loading: false });
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error || "Failed to fetch products");
+         toast.error(error.response.data.error || "Failed to fetch products.");
       }
    },
 
@@ -80,21 +95,22 @@ export const useProduct = create((set) => ({
          }));
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error || "Failed to update product");
+         toast.error(error.response.data.error || "Failed to update product.");
       }
    },
 
-   updateProduct: async (productId) => {
+   updateProduct: async (productId, productData) => {
       set({ loading: true });
       try {
-         const res = await axios.put(`/products/${productId}`);
+         const res = await axios.put(`/products/${productId}`, productData);
          set((prevState) => ({
             products: prevState.products.map((product) => (product._id === productId ? res.data : product)),
             loading: false,
          }));
+         toast.success("Product has been updated successfully.");
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error || "Failed to update product");
+         toast.error(error.response.data.error || "Failed to update product.");
       }
    },
 
@@ -106,9 +122,25 @@ export const useProduct = create((set) => ({
             products: prevState.products.filter((product) => product._id !== productId),
             loading: false,
          }));
+         toast.success("Product has been deleted successfully.");
       } catch (error) {
          set({ loading: false });
-         toast.error(error.response.data.error || "Failed to delete product");
+         toast.error(error.response.data.error || "Failed to delete product.");
+      }
+   },
+
+   updateCustomization: async (id, data) => {
+      set({ loading: true });
+      try {
+         const res = await axios.put(`/customizations/${id}`, data);
+         set((prevState) => ({
+            customizations: prevState.customizations.map((customization) => (customization._id === id ? res.data : customization)),
+            loading: true,
+         }));
+         toast.success("Customization has been updated successfully.");
+      } catch (error) {
+         set({ loading: false });
+         toast.error(error.response.data.error || "Failed to update customization.");
       }
    },
 }));

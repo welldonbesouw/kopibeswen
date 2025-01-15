@@ -77,15 +77,15 @@ export async function getProductsByCategory(req, res) {
 
 export async function updateProduct(req, res) {
    const { id: productId } = req.params;
-   const { name, description, price, image, category } = req.body;
+   const { name, price, description, image, category } = req.body;
    try {
       const product = await Product.findByIdAndUpdate(
          productId,
          {
             name,
-            description,
             price,
-            image,
+            description,
+            image: image ? image : (await Product.findById(productId).image) || "",
             category,
          },
          { new: true }

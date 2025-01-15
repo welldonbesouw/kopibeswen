@@ -11,6 +11,9 @@ import { AnimatePresence } from "framer-motion";
 import Profile from "./pages/Profile";
 import { useUser } from "./hooks/useUser";
 import LoaderSpinner from "./components/LoaderSpinner";
+import UpdateProduct from "./pages/Admin/UpdateProduct";
+import ProductItem from "./pages/Menu/ProductItem";
+import { Toaster } from "react-hot-toast";
 
 function App() {
    const [showLogin, setShowLogin] = useState(false);
@@ -33,14 +36,17 @@ function App() {
             <Navbar />
             <Routes>
                <Route path="/" element={<Home />} />
-               <Route path="/menu/:category" element={<Menu />} />
+               <Route path="/menu" element={<Menu />} />
+               <Route path="/:id" element={<ProductItem />} />
                <Route path="/sip-stash" element={<SipStash />} />
                <Route path="/account" element={<Account handleShowLogin={handleShowLogin} />} />
                <Route path="/profile" element={<Profile />} /> {/* TODO: only logged in user can access */}
                <Route path="/admin-dashboard" element={user?.role === "admin" ? <Admin /> : <Home />} />
+               <Route path="/update-product/:id" element={user?.role === "admin" ? <UpdateProduct /> : <Home />} />
             </Routes>
             {checkingAuth && <LoaderSpinner />}
          </div>
+         <Toaster />
          {/* show login window if showLogin state is true */}
          <AnimatePresence>{showLogin && <Auth handleShowLogin={handleShowLogin} />}</AnimatePresence>
       </>

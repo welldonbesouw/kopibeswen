@@ -77,3 +77,7 @@ export function Edit() {
 export function Trash() {
    return <i className="fi fi-sr-cross-circle text-[#6F4E37] text-2xl"></i>;
 }
+
+export function EditIcon() {
+   return <i className="text-2xl fi fi-bs-square-pen"></i>;
+}
